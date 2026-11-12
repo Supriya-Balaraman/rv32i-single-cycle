@@ -77,5 +77,25 @@ module id_stage (
         .wb_data(wb_data),
         .reg_write(reg_write)
     );
+    logic [1:0] alu_op_old;
+logic [1:0] a_sel_unused, wb_sel_unused;
+logic       jal_unused;
+
+main_control ctrl (
+    .opcode(opcode),
+    .reg_write(reg_write),
+    .alu_src(alu_src),
+    .a_sel(a_sel_unused),
+    .mem_read(mem_read),
+    .mem_write(mem_write),
+    .wb_sel(wb_sel_unused),
+    .branch(branch),
+    .jal(jal_unused),
+    .jalr(jalr),
+    .alu_op(alu_op_old)
+);
+
+assign aluop    = {1'b0, alu_op_old};
+assign memtoreg = mem_read;
 
 endmodule
